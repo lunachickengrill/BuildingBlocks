@@ -46,7 +46,9 @@ public class XmlServlet extends FrameworkServlet {
 
         String xmlRequest = retrieveTmngxXmlRequest(request);
         logger.debug("processing XML message from {}: {}", request.getRemoteHost(), xmlRequest);
-        String xmlResponse = service.doTest(xmlRequest);
+//        String xmlResponse = service.doTest(xmlRequest);
+        
+        String xmlResponse = service.doService(xmlRequest);
 
         // Send back XML response
         response.setContentType(MimeTypeUtils.APPLICATION_XML_VALUE);

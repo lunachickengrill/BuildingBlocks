@@ -10,10 +10,10 @@ import javax.persistence.Table;
 @Table(name = "T_MAILSERVICE")
 public class MailService extends AbstractBaseEntity {
 
-	@Column(name = "EMAIL_ADDRESS")
+	@Column(name = "EMAIL_ADDRESS", unique=true, updatable=true,nullable=false)
 	private String emailAddress;
 
-	@Column(name = "PASSWORD")
+	@Column(name = "PASSWORD", unique=true, updatable=true, nullable=false)
 	private String password;
 
 	public MailService(final String emailAddress, final String password) {

@@ -3,6 +3,8 @@ package com.components.xmlservlet;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Map;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +26,13 @@ public class XmlConverterTest extends AbstractBaseTest {
 		System.out.println(xml);
 	}
 
-	@Ignore
 	@Test
-	public void fromXmlRequest() {
-		XmlServiceRequest request = converter.fromXmlRequest(XML_REQUEST);
+	public void toMapfromXml() {
+		Map<String, String> xmlMap = converter.fromXmlRequest(XML_REQUEST);
 
-		assertTrue(request.getEmailAddress().equals("abc@def.com") && request.getType().equals("CREATE")
-				&& request.getRequestId().equals("ABC001"));
+		assertTrue(!(xmlMap.entrySet().isEmpty()));
 	}
 
-	@Ignore
 	@Test
 	public void toXmlServiceResponse() {
 		ServiceResponse response = new ServiceResponse(SERVICEREQUEST);
@@ -41,6 +40,15 @@ public class XmlConverterTest extends AbstractBaseTest {
 		assertTrue(!(xml.isEmpty()));
 		assertTrue(xml.contains("ABC001"));
 
+	}
+
+	@Test
+	public void toXmlMap() {
+		Map<String, String> xmlMap = converter.fromXmlToMap(XML_REQUEST);
+
+		for (Map.Entry<String, String> entry : xmlMap.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+		}
 	}
 
 }
