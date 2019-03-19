@@ -46,8 +46,7 @@ public class XmlServlet extends FrameworkServlet {
 
         String xmlRequest = retrieveTmngxXmlRequest(request);
         logger.debug("processing XML message from {}: {}", request.getRemoteHost(), xmlRequest);
-//        String xmlResponse = service.doTest(xmlRequest);
-        
+
         String xmlResponse = service.doService(xmlRequest);
 
         // Send back XML response
@@ -57,8 +56,7 @@ public class XmlServlet extends FrameworkServlet {
         response.getWriter().flush();
 
         logger.debug("sending back XML reponse {}", xmlResponse);
-        
-        
+         
 
 	}
 

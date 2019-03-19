@@ -4,11 +4,15 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.UnexpectedRollbackException;
 
 import com.components.xmlservlet.api.ServiceResponse;
 import com.components.xmlservlet.model.MailService;
@@ -16,7 +20,7 @@ import com.components.xmlservlet.repositories.MailServiceRepository;
 
 @Service
 public class RequestResponseServiceImpl implements RequestResponseService {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(RequestResponseService.class);
 
 	private static final String REQUESTTYPE = "requestType";
@@ -43,48 +47,30 @@ public class RequestResponseServiceImpl implements RequestResponseService {
 	@Override
 	@Transactional
 	public String doService(String xmlRequest) {
-		// TODO Auto-generated method stub
-		Map<String, String> xmlMap = converter.fromXmlRequest(xmlRequest);
 
+		logger.info(xmlRequest);
+		Map<String, String> xmlMap = converter.fromXmlRequest(xmlRequest);
 		ServiceResponse serviceResponse = new ServiceResponse();
 
-		// String requestId = new String();
-		String emailAddress = new String();
-		String password = new String();
-		MailService mailService;
-
-		if (!xmlMap.get(REQUESTTYPE).isEmpty() && xmlMap.get(REQUESTTYPE).equals(OPERATION)) {
-
-			if (!(xmlMap.get(REQUESTID).isEmpty())) {
-				// requestId = new String(xmlMap.get(REQUESTID));
-				serviceResponse.setRequestId(xmlMap.get(REQUESTID));
-			}
-
-			if (!(xmlMap.get(EMAILADDRESS).isEmpty())) {
-				emailAddress = xmlMap.get(EMAILADDRESS);
-			}
-
-			if (!(xmlMap.get(PASSWORD).isEmpty())) {
-				password = xmlMap.get(PASSWORD);
-			}
-
-			mailService = new MailService(emailAddress, password);
-
-			try {
-				repo.saveAndFlush(mailService);
-				serviceResponse.setStatus("SUCCESS");
-				
-			} catch (DataAccessException  ex) {
-				serviceResponse.setStatus("FAIL");
-				return converter.toXmlResponse(serviceResponse);
-			}
+		if ((xmlMap.get(REQUESTTYPE).isEmpty() || (!xmlMap.get(REQUESTTYPE).equals(OPERATION)))
+				|| xmlMap.get(EMAILADDRESS).isEmpty() || xmlMap.get(PASSWORD).isEmpty()
+				|| xmlMap.get(REQUESTID).isEmpty()) {
+			serviceResponse.setStatus("MISSING PARAM");
+			serviceResponse.setRequestId(xmlMap.get(REQUESTID));
+		} else {
+			serviceResponse.setRequestId(xmlMap.get(REQUESTID));
 		}
 
-		logger.info(serviceResponse.toString());
-		String xmlResponse = converter.toXmlResponse(serviceResponse);
-		logger.info(xmlResponse);
+		try {
+			repo.saveAndFlush(new MailService(xmlMap.get(EMAILADDRESS), xmlMap.get(PASSWORD)));
+			serviceResponse.setStatus("SUCCESS");
+		} catch (DataIntegrityViolationException  ex) {
+			serviceResponse.setStatus(ex.getCause().toString());
+		}
 
+		String xmlResponse = converter.toXmlResponse(serviceResponse);
+
+		logger.info(xmlResponse);
 		return xmlResponse;
 	}
-
 }
