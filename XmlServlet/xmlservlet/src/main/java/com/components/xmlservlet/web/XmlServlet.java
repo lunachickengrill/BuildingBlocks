@@ -13,13 +13,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.util.Assert;
 import org.springframework.util.MimeType;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.util.WebUtils;
 
+import com.components.xmlservlet.api.XmlServiceResponse;
 import com.components.xmlservlet.service.RequestResponseService;
+import com.components.xmlservlet.service.XmlConverter;
 
 import org.springframework.web.servlet.FrameworkServlet;
 
@@ -30,33 +33,34 @@ public class XmlServlet extends FrameworkServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 752827566880733133L;
-	
+
 	Logger logger = LoggerFactory.getLogger(XmlServlet.class);
-	
+
 	private RequestResponseService service;
-	
+	private XmlConverter converter;
+
 	@Autowired
-	public XmlServlet(final RequestResponseService service) {
-		this.service=service;
+	public XmlServlet(final RequestResponseService service, final XmlConverter converter) {
+		this.service = service;
+		this.converter = converter;
 	}
 
 	@Override
 	protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Assert.isTrue("POST".equals(request.getMethod()), "only POST requests are handled");
 
-        String xmlRequest = retrieveTmngxXmlRequest(request);
-        logger.debug("processing XML message from {}: {}", request.getRemoteHost(), xmlRequest);
+		String xmlRequest = retrieveTmngxXmlRequest(request);
+		logger.debug("processing XML message from {}: {}", request.getRemoteHost(), xmlRequest);
 
-        String xmlResponse = service.doService(xmlRequest);
+		String xmlResponse = service.doService(xmlRequest);
 
-        // Send back XML response
-        response.setContentType(MimeTypeUtils.APPLICATION_XML_VALUE);
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(xmlResponse);
-        response.getWriter().flush();
+		// Send back XML response
+		response.setContentType(MimeTypeUtils.APPLICATION_XML_VALUE);
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(xmlResponse);
+		response.getWriter().flush();
 
-        logger.debug("sending back XML reponse {}", xmlResponse);
-         
+		logger.debug("sending back XML reponse {}", xmlResponse);
 
 	}
 

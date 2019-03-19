@@ -1,0 +1,5 @@
+<XmlServiceRequest>
+	<requestId>ABC002</requestId>
+	<requestMethod>DELETE</requestMethod>
+	<emailAddress>abc@def.com</emailAddress>
+</XmlServiceRequest>

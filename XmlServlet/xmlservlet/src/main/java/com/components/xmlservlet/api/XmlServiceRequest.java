@@ -3,7 +3,12 @@ package com.components.xmlservlet.api;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class XmlServiceRequest extends ServiceRequest {
+public class XmlServiceRequest extends ServiceMessage {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4339730072088544628L;
 
 	@NotNull
 	@Size(min = 2, max = 100)
@@ -42,9 +47,7 @@ public class XmlServiceRequest extends ServiceRequest {
 	@Override
 	public String toString() {
 		return "XmlServiceRequest [emailAddress=" + emailAddress + ", password=" + password + ", getRequestId()="
-				+ getRequestId() + ", getType()=" + getType() + "]";
+				+ getRequestId() + ", requestMethod=" + getRequestMethod() + "]";
 	}
-	
-	
 
 }

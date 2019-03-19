@@ -1,0 +1,7 @@
+
+<XmlServiceRequest>
+	<requestId>ABC001</requestId>
+	<requestMethod>CREATE</requestMethod>
+	<emailAddress>abc@def.com</emailAddress>
+	<password>1234</password>
+</XmlServiceRequest>
