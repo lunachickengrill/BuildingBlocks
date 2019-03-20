@@ -18,9 +18,9 @@ import com.components.xmlservlet.repositories.MailServiceRepository;
 
 @Service
 @Transactional
-public class RequestResponseServiceImpl implements RequestResponseService {
+public class BasicMailServiceImpl implements BasciMailService {
 
-	private static final Logger logger = LoggerFactory.getLogger(RequestResponseService.class);
+	private static final Logger logger = LoggerFactory.getLogger(BasciMailService.class);
 
 	private static final String REQUESTMETHOD = "requestMethod";
 	private static final String CREATE = "CREATE";
@@ -37,7 +37,7 @@ public class RequestResponseServiceImpl implements RequestResponseService {
 	private XmlConverter converter;
 
 	@Autowired
-	public RequestResponseServiceImpl(final MailServiceRepository repo, XmlConverter converter) {
+	public BasicMailServiceImpl(final MailServiceRepository repo, XmlConverter converter) {
 		this.repo = repo;
 		this.converter = converter;
 	}

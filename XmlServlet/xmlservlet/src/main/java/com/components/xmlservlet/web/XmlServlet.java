@@ -21,7 +21,7 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.util.WebUtils;
 
 import com.components.xmlservlet.api.XmlServiceResponse;
-import com.components.xmlservlet.service.RequestResponseService;
+import com.components.xmlservlet.service.BasciMailService;
 import com.components.xmlservlet.service.XmlConverter;
 
 import org.springframework.web.servlet.FrameworkServlet;
@@ -36,11 +36,11 @@ public class XmlServlet extends FrameworkServlet {
 
 	Logger logger = LoggerFactory.getLogger(XmlServlet.class);
 
-	private RequestResponseService service;
+	private BasciMailService service;
 	private XmlConverter converter;
 
 	@Autowired
-	public XmlServlet(final RequestResponseService service, final XmlConverter converter) {
+	public XmlServlet(final BasciMailService service, final XmlConverter converter) {
 		this.service = service;
 		this.converter = converter;
 	}

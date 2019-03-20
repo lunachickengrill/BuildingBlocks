@@ -2,7 +2,7 @@ package com.components.xmlservlet.service;
 
 import java.util.Map;
 
-public interface RequestResponseService {
+public interface BasciMailService {
 
 //	public String doTest(String xmlRequest);
 	
