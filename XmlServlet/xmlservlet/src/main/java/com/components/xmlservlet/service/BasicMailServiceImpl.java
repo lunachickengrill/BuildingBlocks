@@ -85,6 +85,7 @@ public class BasicMailServiceImpl implements BasciMailService {
 			}
 		} catch (UnexpectedRollbackException | DataAccessException ex) {
 			serviceResponse.setStatus(STATUS_FAIL);
+			
 		}
 
 		String xmlResponse = converter.toXmlResponse(serviceResponse);
