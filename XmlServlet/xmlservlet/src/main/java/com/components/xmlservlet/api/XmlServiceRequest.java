@@ -1,19 +1,26 @@
 package com.components.xmlservlet.api;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class XmlServiceRequest extends ServiceMessage {
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+@XStreamAlias("XmlServiceRequest")
+public class XmlServiceRequest extends ServiceMessage implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4339730072088544628L;
 
+	@XStreamAlias("emailAddress")
 	@NotNull
 	@Size(min = 2, max = 100)
 	private String emailAddress;
 
+	@XStreamAlias("password")
 	@NotNull
 	@Size(min = 2, max = 16)
 	private String password;
@@ -46,8 +53,8 @@ public class XmlServiceRequest extends ServiceMessage {
 
 	@Override
 	public String toString() {
-		return "XmlServiceRequest [emailAddress=" + emailAddress + ", password=" + password + ", getRequestId()="
-				+ getRequestId() + ", requestMethod=" + getRequestMethod() + "]";
+		return "XmlServiceRequest [getEmailAddress()=" + getEmailAddress() + ", getPassword()=" + getPassword()
+				+ ", getRequestId()=" + getRequestId() + ", getRequestType()=" + getRequestType() + "]";
 	}
 
 }

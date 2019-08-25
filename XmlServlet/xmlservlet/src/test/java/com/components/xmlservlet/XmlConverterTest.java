@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.components.xmlservlet.api.XmlServiceResponse;
 import com.components.xmlservlet.api.XmlServiceRequest;
 import com.components.xmlservlet.service.XmlConverter;
+import com.thoughtworks.xstream.XStream;
 
 public class XmlConverterTest extends AbstractBaseTest {
 
@@ -23,6 +24,8 @@ public class XmlConverterTest extends AbstractBaseTest {
 		Map<String, String> xmlMap = converter.fromXmlRequest(XML_REQUEST);
 
 		assertTrue(!(xmlMap.entrySet().isEmpty()));
+
+		xmlMap.forEach((k,v)->System.out.println("key " + k + " value: " + v));
 	}
 
 	@Test
@@ -42,5 +45,15 @@ public class XmlConverterTest extends AbstractBaseTest {
 			System.out.println(entry.getKey() + " " + entry.getValue());
 		}
 	}
+	
+	@Test
+	public void toXmlServiceRequest() {
+		XmlServiceRequest request = converter.toXmlRequest(XML_REQUEST);
+		assertNotNull(request);
+		
+		System.out.println(request.toString());
+	}
+
+	
 
 }

@@ -18,11 +18,11 @@ import com.components.xmlservlet.repositories.MailServiceRepository;
 
 @Service
 @Transactional
-public class BasicMailServiceImpl implements BasciMailService {
+public class XmlDispatcherServiceImpl implements XmlDispatcherService {
 
-	private static final Logger logger = LoggerFactory.getLogger(BasciMailService.class);
+	private static final Logger logger = LoggerFactory.getLogger(XmlDispatcherService.class);
 
-	private static final String REQUESTMETHOD = "requestMethod";
+	private static final String REQUESTMETHOD = "requestType";
 	private static final String CREATE = "CREATE";
 	private static final String DELETE = "DELETE";
 	private static final String REQUESTID = "requestId";
@@ -37,7 +37,7 @@ public class BasicMailServiceImpl implements BasciMailService {
 	private XmlConverter converter;
 
 	@Autowired
-	public BasicMailServiceImpl(final MailServiceRepository repo, XmlConverter converter) {
+	public XmlDispatcherServiceImpl(final MailServiceRepository repo, XmlConverter converter) {
 		this.repo = repo;
 		this.converter = converter;
 	}
@@ -53,6 +53,8 @@ public class BasicMailServiceImpl implements BasciMailService {
 		if (checkParam(xmlMap, REQUESTID)) {
 			serviceResponse.setRequestId(xmlMap.get(REQUESTID));
 		}
+		
+		xmlMap.forEach((k,v)-> logger.info("xmlMap: " + k + " " + v));
 
 		try {
 

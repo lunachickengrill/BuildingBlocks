@@ -11,7 +11,9 @@ public interface XmlConverter {
 	public Map<String, String> fromXmlRequest(final String xml);
 
 	public String toXmlResponse(XmlServiceResponse serviceResponse);
-	
+
+	public XmlServiceRequest toXmlRequest(final String xml);
+
 //	public String toXmlTest();
 //	
 //	public Map<String, String> fromXmlToMap(final String xml);

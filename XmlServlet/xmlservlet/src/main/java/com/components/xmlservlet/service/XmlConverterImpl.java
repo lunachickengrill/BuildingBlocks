@@ -13,9 +13,9 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 public class XmlConverterImpl implements XmlConverter {
 
 	private static final String REQUEST_ALIAS = "XmlServiceRequest";
+
 	public XmlConverterImpl() {
 	}
-
 
 	@Override
 	public Map<String, String> fromXmlRequest(String xml) {
@@ -35,14 +35,13 @@ public class XmlConverterImpl implements XmlConverter {
 		return xml;
 	}
 
-	public XmlServiceRequest toRequest(String xml) {
+	@Override
+	public XmlServiceRequest toXmlRequest(String xml) {
 		XStream xStream = new XStream();
 		xStream.processAnnotations(XmlServiceRequest.class);
 		XmlServiceRequest request = (XmlServiceRequest) xStream.fromXML(xml);
 
 		return request;
 	}
-
-
 
 }

@@ -14,9 +14,6 @@ public class XmlServiceResponse extends ServiceMessage implements Serializable {
 
 	private static final String DEF_STATUS = "SUCCESS";
 
-//	@XStreamAlias("requestId")
-//	private String requestId;
-
 	@XStreamAlias("status")
 	private String status;
 
@@ -40,8 +37,8 @@ public class XmlServiceResponse extends ServiceMessage implements Serializable {
 
 	@Override
 	public String toString() {
-		return "XmlServiceResponse [status=" + status + ", getRequestId()=" + getRequestId() + ", getRequestMethod()="
-				+ getRequestMethod() + "]";
+		return "XmlServiceResponse [getStatus()=" + getStatus() + ", getRequestId()=" + getRequestId()
+				+ ", getRequestType()=" + getRequestType() + "]";
 	}
 
 }
