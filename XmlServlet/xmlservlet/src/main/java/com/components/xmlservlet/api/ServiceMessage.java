@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-public class ServiceMessage implements Serializable {
+public abstract class ServiceMessage implements Serializable {
 
 	/**
 	 * 

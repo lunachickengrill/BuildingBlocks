@@ -3,6 +3,7 @@ package com.components.xmlservlet.web;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +45,15 @@ public class XmlServlet extends FrameworkServlet {
 		this.service = service;
 		this.converter = converter;
 	}
+	
+	
+
+	@Override
+	protected void initFrameworkServlet() throws ServletException {
+		super.initFrameworkServlet();
+	}
+
+
 
 	@Override
 	protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
