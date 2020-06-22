@@ -3,6 +3,7 @@ package com.components.xmlservlet.web;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +24,7 @@ import org.springframework.web.util.WebUtils;
 import com.components.xmlservlet.api.ServiceResponse;
 import com.components.xmlservlet.service.BasicCustomerService;
 import com.components.xmlservlet.service.DispatcherService;
+
 import com.components.xmlservlet.service.XmlConverter;
 
 import org.springframework.web.servlet.FrameworkServlet;
@@ -41,7 +43,12 @@ public class XmlServlet extends FrameworkServlet {
 
 	@Autowired
 	public XmlServlet(final DispatcherService dispatcherService) {
-		this.dispatcherService=dispatcherService;
+		this.dispatcherService = dispatcherService;
+	}
+
+	@Override
+	protected void initFrameworkServlet() throws ServletException {
+		super.initFrameworkServlet();
 	}
 
 	@Override
@@ -51,7 +58,7 @@ public class XmlServlet extends FrameworkServlet {
 		String xmlRequest = retrieveTmngxXmlRequest(request);
 		logger.debug("processing XML message from {}: {}", request.getRemoteHost(), xmlRequest);
 
-		String xmlResponse = dispatcherService.dispatch(xmlRequest);		
+		String xmlResponse = dispatcherService.dispatch(xmlRequest);
 
 		// Send back XML response
 		response.setContentType(MimeTypeUtils.APPLICATION_XML_VALUE);

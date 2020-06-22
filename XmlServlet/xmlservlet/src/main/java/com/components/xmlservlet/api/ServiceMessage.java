@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-public class ServiceMessage implements Serializable {
+public abstract class ServiceMessage implements Serializable {
 
 	/**
 	 * 
@@ -26,9 +26,11 @@ public class ServiceMessage implements Serializable {
 	private String requestMethod;
 
 	public ServiceMessage(final String requestId, final String requestService, final String requestMethod) {
+
 		this.requestId = requestId;
 		this.requestService = requestService;
 		this.requestMethod = requestMethod;
+
 	}
 
 	public ServiceMessage() {
@@ -61,8 +63,10 @@ public class ServiceMessage implements Serializable {
 
 	@Override
 	public String toString() {
+
 		return "ServiceMessage [requestId=" + requestId + ", requestService=" + requestService + ", requestMethod="
 				+ requestMethod + "]";
+
 	}
 
 }

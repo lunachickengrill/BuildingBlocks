@@ -36,8 +36,8 @@ public class ServiceResponse extends ServiceMessage implements Serializable {
 
 	@Override
 	public String toString() {
-		return "XmlServiceResponse [status=" + status + ", getRequestId()=" + getRequestId() + ", getRequestMethod()="
-				+ getRequestMethod() + "]";
+		return "ServiceResponse [status=" + status + ", getRequestId()=" + getRequestId() + ", getRequestService()="
+				+ getRequestService() + ", getRequestMethod()=" + getRequestMethod() + "]";
 	}
 
 }

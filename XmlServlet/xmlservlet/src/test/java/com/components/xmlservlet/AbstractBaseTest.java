@@ -18,9 +18,16 @@ public class AbstractBaseTest {
 	public static final String REQUEST_EMAIL = "abdcefg@kapschcs.at";
 	public static final String REQUEST_PWD = "kcs123";
 
-	public static final String XML_REQUEST = "<?xml version=\"1.0\"?><XmlServiceRequest><requestId>ABC001</requestId><requestType>CREATE</requestType><emailAddress>abc@def.com</emailAddress><password>1234</password></XmlServiceRequest>";
+	public static final String XML_REQUEST = "<ServiceRequest>\r\n" + 
+			"  <requestId>123</requestId>\r\n" + 
+			"  <requestService>basicCustomerService</requestService>\r\n" + 
+			"  <requestMethod>createCustomer</requestMethod>\r\n" + 
+			"  <emailAddress>emailAdress</emailAddress>\r\n" + 
+			"  <password>password</password>\r\n" + 
+			"</ServiceRequest>";
 
 	public static final ServiceRequest SERVICEREQUEST = new ServiceRequest(REQUEST_ID, REQUEST_SERVICE, REQUEST_METHOD,
 			REQUEST_EMAIL, REQUEST_PWD);
+
 
 }

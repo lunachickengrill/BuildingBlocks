@@ -21,8 +21,8 @@ public class ServiceRequest extends ServiceMessage {
 	@Size(min = 2, max = 16)
 	private String password;
 
-	public ServiceRequest(final String requestId, final String requestService,final String requestMethod, final String emailAdress,
-			final String password) {
+	public ServiceRequest(final String requestId, final String requestService, final String requestMethod,
+			final String emailAdress, final String password) {
 		super(requestId, requestService, requestMethod);
 		this.emailAddress = emailAdress;
 		this.password = password;
@@ -49,8 +49,9 @@ public class ServiceRequest extends ServiceMessage {
 
 	@Override
 	public String toString() {
-		return "XmlServiceRequest [emailAddress=" + emailAddress + ", password=" + password + ", getRequestId()="
-				+ getRequestId() + ", requestMethod=" + getRequestMethod() + "]";
+		return "ServiceRequest [emailAddress=" + emailAddress + ", password=" + password + ", getRequestId()="
+				+ getRequestId() + ", getRequestService()=" + getRequestService() + ", getRequestMethod()="
+				+ getRequestMethod() + "]";
 	}
 
 }

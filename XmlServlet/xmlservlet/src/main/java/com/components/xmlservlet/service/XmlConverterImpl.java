@@ -36,7 +36,9 @@ public class XmlConverterImpl implements XmlConverter {
 	}
 
 	@Override
+
 	public ServiceRequest toRequest(String xml) {
+
 		XStream xStream = new XStream();
 		xStream.processAnnotations(ServiceRequest.class);
 		ServiceRequest request = (ServiceRequest) xStream.fromXML(xml);
