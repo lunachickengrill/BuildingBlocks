@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-@XStreamAlias("XmlServiceResponse")
-public class XmlServiceResponse extends ServiceMessage implements Serializable {
+@XStreamAlias("ServiceResponse")
+public class ServiceResponse extends ServiceMessage implements Serializable {
 
 	/**
 	 * 
@@ -14,19 +14,15 @@ public class XmlServiceResponse extends ServiceMessage implements Serializable {
 
 	private static final String DEF_STATUS = "SUCCESS";
 
-//	@XStreamAlias("requestId")
-//	private String requestId;
-
 	@XStreamAlias("status")
 	private String status;
 
-	public XmlServiceResponse(final ServiceMessage request) {
-//		this.requestId = request.getRequestId();
-		super(request.getRequestId(), request.getRequestId());
+	public ServiceResponse(final ServiceMessage request) {
+		super(request.getRequestId(), request.getRequestService(), request.getRequestMethod());
 		this.status = DEF_STATUS;
 	}
 
-	public XmlServiceResponse() {
+	public ServiceResponse() {
 		super();
 	}
 

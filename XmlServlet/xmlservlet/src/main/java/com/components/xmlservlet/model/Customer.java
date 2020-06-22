@@ -7,16 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "T_MAILSERVICE")
-public class MailService extends AbstractBaseEntity {
+@Table(name = "T_CUSTOMER")
+public class Customer extends AbstractBaseEntity {
 
-	@Column(name = "EMAIL_ADDRESS", unique=true, updatable=true,nullable=false)
+	@Column(name = "EMAIL_ADDRESS", unique = true, updatable = true, nullable = false)
 	private String emailAddress;
 
-	@Column(name = "PASSWORD", unique=false, updatable=true, nullable=false)
+	@Column(name = "PASSWORD", unique = false, updatable = true, nullable = false)
 	private String password;
 
-	public MailService(final String emailAddress, final String password) {
+	public Customer(final String emailAddress, final String password) {
 		this.emailAddress = emailAddress;
 		this.password = password;
 	}
@@ -62,7 +62,7 @@ public class MailService extends AbstractBaseEntity {
 		return "MailService [emailAddress=" + emailAddress + ", password=" + password + "]";
 	}
 
-	MailService() {
+	Customer() {
 
 	}
 

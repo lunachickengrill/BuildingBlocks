@@ -1,16 +1,13 @@
 package com.components.xmlservlet;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.components.xmlservlet.api.XmlServiceResponse;
-import com.components.xmlservlet.api.XmlServiceRequest;
+import com.components.xmlservlet.api.ServiceResponse;
 import com.components.xmlservlet.service.XmlConverter;
 
 public class XmlConverterTest extends AbstractBaseTest {
@@ -27,7 +24,7 @@ public class XmlConverterTest extends AbstractBaseTest {
 
 	@Test
 	public void toXmlServiceResponse() {
-		XmlServiceResponse response = new XmlServiceResponse(SERVICEREQUEST);
+		ServiceResponse response = new ServiceResponse(SERVICEREQUEST);
 		String xml = converter.toXmlResponse(response);
 		assertTrue(!(xml.isEmpty()));
 		assertTrue(xml.contains("ABC001"));

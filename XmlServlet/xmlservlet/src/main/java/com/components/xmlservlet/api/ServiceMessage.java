@@ -18,11 +18,16 @@ public class ServiceMessage implements Serializable {
 	private String requestId;
 
 	@NotNull
+	@XStreamAlias("requestService")
+	private String requestService;
+
+	@NotNull
 	@XStreamAlias("requestMethod")
 	private String requestMethod;
 
-	public ServiceMessage(final String requestId, final String requestMethod) {
+	public ServiceMessage(final String requestId, final String requestService, final String requestMethod) {
 		this.requestId = requestId;
+		this.requestService = requestService;
 		this.requestMethod = requestMethod;
 	}
 
@@ -32,6 +37,14 @@ public class ServiceMessage implements Serializable {
 
 	public String getRequestId() {
 		return requestId;
+	}
+
+	public String getRequestService() {
+		return requestService;
+	}
+
+	public void setRequestService(String requestService) {
+		this.requestService = requestService;
 	}
 
 	public void setRequestId(String requestId) {
@@ -48,7 +61,8 @@ public class ServiceMessage implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ServiceRequest [requestId=" + requestId + ", requestMethod=" + requestMethod + "]";
+		return "ServiceMessage [requestId=" + requestId + ", requestService=" + requestService + ", requestMethod="
+				+ requestMethod + "]";
 	}
 
 }

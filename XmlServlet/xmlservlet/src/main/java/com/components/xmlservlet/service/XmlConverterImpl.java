@@ -4,18 +4,18 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.components.xmlservlet.api.XmlServiceResponse;
-import com.components.xmlservlet.api.XmlServiceRequest;
+import com.components.xmlservlet.api.ServiceResponse;
+import com.components.xmlservlet.api.ServiceRequest;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 @Service
 public class XmlConverterImpl implements XmlConverter {
 
-	private static final String REQUEST_ALIAS = "XmlServiceRequest";
+	private static final String REQUEST_ALIAS = "ServiceRequest";
+
 	public XmlConverterImpl() {
 	}
-
 
 	@Override
 	public Map<String, String> fromXmlRequest(String xml) {
@@ -28,21 +28,28 @@ public class XmlConverterImpl implements XmlConverter {
 	}
 
 	@Override
-	public String toXmlResponse(XmlServiceResponse serviceResponse) {
+	public String toXmlResponse(ServiceResponse serviceResponse) {
 		XStream xStream = new XStream();
-		xStream.processAnnotations(XmlServiceResponse.class);
+		xStream.processAnnotations(ServiceResponse.class);
 		String xml = xStream.toXML(serviceResponse);
 		return xml;
 	}
 
-	public XmlServiceRequest toRequest(String xml) {
+	@Override
+	public ServiceRequest toRequest(String xml) {
 		XStream xStream = new XStream();
-		xStream.processAnnotations(XmlServiceRequest.class);
-		XmlServiceRequest request = (XmlServiceRequest) xStream.fromXML(xml);
+		xStream.processAnnotations(ServiceRequest.class);
+		ServiceRequest request = (ServiceRequest) xStream.fromXML(xml);
 
 		return request;
 	}
 
+	@Override
+	public String toXmlRequest(ServiceRequest req) {
+		XStream xStream = new XStream();
+		xStream.processAnnotations(ServiceRequest.class);
+		return xStream.toXML(req);
 
+	}
 
 }

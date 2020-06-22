@@ -3,7 +3,10 @@ package com.components.xmlservlet.api;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class XmlServiceRequest extends ServiceMessage {
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+@XStreamAlias("ServiceRequest")
+public class ServiceRequest extends ServiceMessage {
 
 	/**
 	 * 
@@ -18,14 +21,14 @@ public class XmlServiceRequest extends ServiceMessage {
 	@Size(min = 2, max = 16)
 	private String password;
 
-	public XmlServiceRequest(final String requestId, final String type, final String emailAdress,
+	public ServiceRequest(final String requestId, final String requestService,final String requestMethod, final String emailAdress,
 			final String password) {
-		super(requestId, type);
+		super(requestId, requestService, requestMethod);
 		this.emailAddress = emailAdress;
 		this.password = password;
 	}
 
-	public XmlServiceRequest() {
+	public ServiceRequest() {
 	}
 
 	public String getEmailAddress() {

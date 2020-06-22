@@ -2,18 +2,17 @@ package com.components.xmlservlet.service;
 
 import java.util.Map;
 
-import com.components.xmlservlet.api.ServiceMessage;
-import com.components.xmlservlet.api.XmlServiceResponse;
-import com.components.xmlservlet.api.XmlServiceRequest;
+import com.components.xmlservlet.api.ServiceRequest;
+import com.components.xmlservlet.api.ServiceResponse;
 
 public interface XmlConverter {
 
 	public Map<String, String> fromXmlRequest(final String xml);
 
-	public String toXmlResponse(XmlServiceResponse serviceResponse);
+	public String toXmlResponse(ServiceResponse serviceResponse);
 	
-//	public String toXmlTest();
-//	
-//	public Map<String, String> fromXmlToMap(final String xml);
+	public ServiceRequest toRequest(String xml);
+
+	public String toXmlRequest(ServiceRequest req);
 
 }

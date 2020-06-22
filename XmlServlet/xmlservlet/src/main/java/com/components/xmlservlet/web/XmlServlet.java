@@ -20,8 +20,9 @@ import org.springframework.util.MimeTypeUtils;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.util.WebUtils;
 
-import com.components.xmlservlet.api.XmlServiceResponse;
-import com.components.xmlservlet.service.BasciMailService;
+import com.components.xmlservlet.api.ServiceResponse;
+import com.components.xmlservlet.service.BasicCustomerService;
+import com.components.xmlservlet.service.DispatcherService;
 import com.components.xmlservlet.service.XmlConverter;
 
 import org.springframework.web.servlet.FrameworkServlet;
@@ -36,13 +37,11 @@ public class XmlServlet extends FrameworkServlet {
 
 	Logger logger = LoggerFactory.getLogger(XmlServlet.class);
 
-	private BasciMailService service;
-	private XmlConverter converter;
+	private DispatcherService dispatcherService;
 
 	@Autowired
-	public XmlServlet(final BasciMailService service, final XmlConverter converter) {
-		this.service = service;
-		this.converter = converter;
+	public XmlServlet(final DispatcherService dispatcherService) {
+		this.dispatcherService=dispatcherService;
 	}
 
 	@Override
@@ -52,7 +51,7 @@ public class XmlServlet extends FrameworkServlet {
 		String xmlRequest = retrieveTmngxXmlRequest(request);
 		logger.debug("processing XML message from {}: {}", request.getRemoteHost(), xmlRequest);
 
-		String xmlResponse = service.doService(xmlRequest);
+		String xmlResponse = dispatcherService.dispatch(xmlRequest);		
 
 		// Send back XML response
 		response.setContentType(MimeTypeUtils.APPLICATION_XML_VALUE);
