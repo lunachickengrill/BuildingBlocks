@@ -66,8 +66,8 @@ public class BasicCustomerServiceImpl implements BasicCustomerService {
 		validator.validate(obj, bindingResult);
 		
 		if (bindingResult.hasErrors()) {
-			
-			throw new XmlServiceException("Request validation error!");
+			System.out.println("Inside validateBean");			
+			throw new XmlServiceException("Bean validation error");
 		}
 
 	}

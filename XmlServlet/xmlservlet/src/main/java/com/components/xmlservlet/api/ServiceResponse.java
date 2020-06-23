@@ -17,9 +17,13 @@ public class ServiceResponse extends ServiceMessage implements Serializable {
 	@XStreamAlias("status")
 	private String status;
 
+	@XStreamAlias("statusmessage")
+	private String statusMessage;
+
 	public ServiceResponse(final ServiceMessage request) {
 		super(request.getRequestId(), request.getRequestService(), request.getRequestMethod());
 		this.status = DEF_STATUS;
+		this.statusMessage = "";
 	}
 
 	public ServiceResponse() {
@@ -32,6 +36,14 @@ public class ServiceResponse extends ServiceMessage implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getStatusMessage() {
+		return statusMessage;
+	}
+
+	public void setStatusMessage(String statusMessage) {
+		this.statusMessage = statusMessage;
 	}
 
 	@Override

@@ -48,22 +48,16 @@ public class DispatcherServiceImpl implements DispatcherService {
 			}
 
 			ApplicationService service = lookupService(requestService);
-			if (service == null) {
-				throw new XmlServiceException("Service not found with name " + requestService);
-			}
-
 			Method method = lookupMethod(service, requestMethod);
-
 			ServiceMessage serviceMessage = createServiceRequest(method);
-
 			serviceMessage = bindParameter(serviceMessage, elementMap);
 
 			resp = invoke(service, method, serviceMessage);
 			return converter.toXmlResponse(resp);
 		} catch (XmlServiceException ex) {
-			System.out.println("Exception thrown!");
 			System.out.println("Exception message: " + ex.getMessage());
-			resp.setStatus(ex.getMessage());
+			resp.setStatus("ERROR");
+			resp.setStatusMessage(ex.getMessage());
 			return converter.toXmlResponse(resp);
 		}
 	}
