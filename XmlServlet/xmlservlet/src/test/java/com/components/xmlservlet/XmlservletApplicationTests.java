@@ -60,6 +60,7 @@ public class XmlservletApplicationTests extends AbstractBaseTest {
 		String xmlReq = converter.toXmlRequest(req);
 
 		String respXml = dispatcherService.dispatch(xmlReq);
+		assertTrue(respXml.contains("Cannot lookup service with name"));
 
 		System.out.println(respXml);
 	}
@@ -71,8 +72,9 @@ public class XmlservletApplicationTests extends AbstractBaseTest {
 		
 		String xmlReq = converter.toXmlRequest(req);
 		String respXml = dispatcherService.dispatch(xmlReq);
+		
+		assertTrue(respXml.contains("Bean validation error"));
 
-		System.out.println(respXml);
 	}
 
 	@Ignore
