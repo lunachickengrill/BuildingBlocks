@@ -13,15 +13,21 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.MethodInvoker;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.DataBinder;
+import org.springframework.validation.Validator;
 
 import com.components.xmlservlet.api.ServiceMessage;
 import com.components.xmlservlet.api.ServiceRequest;
 import com.components.xmlservlet.api.ServiceResponse;
+import com.components.xmlservlet.exception.BeanValidationException;
 import com.components.xmlservlet.exception.XmlServiceException;
 
 @Service
 public class DispatcherServiceImpl implements DispatcherService {
+
+	@Autowired
+	private Validator validator;
 
 	@Autowired
 	private XmlConverter converter;
@@ -44,17 +50,18 @@ public class DispatcherServiceImpl implements DispatcherService {
 			String requestMethod = elementMap.get("requestMethod");
 
 			if (requestService == null || requestMethod == null) {
-				throw new RuntimeException("message does not contain service or method name");
+				throw new XmlServiceException("message does not contain service or method name");
 			}
 
 			ApplicationService service = lookupService(requestService);
 			Method method = lookupMethod(service, requestMethod);
 			ServiceMessage serviceMessage = createServiceRequest(method);
 			serviceMessage = bindParameter(serviceMessage, elementMap);
+			validateBean(serviceMessage);
 
 			resp = invoke(service, method, serviceMessage);
 			return converter.toXmlResponse(resp);
-		} catch (XmlServiceException ex) {
+		} catch (XmlServiceException  ex) {
 			System.out.println("Exception message: " + ex.getMessage());
 			resp.setStatus("ERROR");
 			resp.setStatusMessage(ex.getMessage());
@@ -106,7 +113,8 @@ public class DispatcherServiceImpl implements DispatcherService {
 		}
 	}
 
-	private ServiceResponse invoke(ApplicationService service, Method method, ServiceMessage serviceMessage) throws XmlServiceException {
+	private ServiceResponse invoke(ApplicationService service, Method method, ServiceMessage serviceMessage)
+			throws XmlServiceException {
 
 		MethodInvoker invoker = new MethodInvoker();
 		invoker.setTargetClass(service.getClass());
@@ -128,6 +136,17 @@ public class DispatcherServiceImpl implements DispatcherService {
 		} catch (InvocationTargetException | IllegalAccessException | XmlServiceException ex) {
 			resp.setStatus("ERROR");
 			throw new XmlServiceException(ex.getMessage());
+		}
+
+	}
+
+	public void validateBean(Object obj) {
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(obj, obj.getClass().getSimpleName());
+		validator.validate(obj, bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			System.out.println("Inside validateBean");
+			throw new BeanValidationException("Bean validation error");
 		}
 
 	}

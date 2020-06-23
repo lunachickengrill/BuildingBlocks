@@ -1,6 +1,7 @@
 package com.components.xmlservlet.service;
 
 import javax.transaction.Transactional;
+import javax.validation.ValidationException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -24,8 +25,7 @@ public class BasicCustomerServiceImpl implements BasicCustomerService {
 
 	private CustomerRepository customerRepo;
 	
-	@Autowired
-	private Validator validator;
+
 	
 	@Autowired
 	public BasicCustomerServiceImpl(final CustomerRepository repo, XmlConverter converter) {
@@ -34,7 +34,7 @@ public class BasicCustomerServiceImpl implements BasicCustomerService {
 
 	@Override
 	public ServiceResponse createCustomer(ServiceRequest req) {
-		validateBean(req);
+//		validateBean(req);
 		
 		logger.info("createCustomer: " + req.getRequestId());
 
@@ -48,7 +48,7 @@ public class BasicCustomerServiceImpl implements BasicCustomerService {
 
 	@Override
 	public ServiceResponse deleteCustomer(ServiceRequest req) {
-		validateBean(req);
+//		validateBean(req);
 		logger.info("deleteCustomer: " + req.getRequestId());
 		return new ServiceResponse(req);
 		
@@ -56,20 +56,11 @@ public class BasicCustomerServiceImpl implements BasicCustomerService {
 
 	@Override
 	public ServiceResponse getCustomer(ServiceRequest req) {
-		validateBean(req);
+//		validateBean(req);
 		logger.info("getCustomer: " + req.getRequestId());
 		return new ServiceResponse(req);
 	}
 	
-	public void validateBean(Object obj) {
-		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(obj, obj.getClass().getSimpleName());
-		validator.validate(obj, bindingResult);
-		
-		if (bindingResult.hasErrors()) {
-			System.out.println("Inside validateBean");			
-			throw new XmlServiceException("Bean validation error");
-		}
-
-	}
+	
 
 }
