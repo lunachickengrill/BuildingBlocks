@@ -1,7 +1,5 @@
 package com.components.xmlservlet.service;
 
-import java.util.Map;
-
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -20,8 +18,6 @@ public class BasicCustomerServiceImpl implements BasicCustomerService {
 
 	private static final Logger logger = LoggerFactory.getLogger(BasicCustomerService.class);
 
-	private static final String EMAILADDRESS = "emailAddress";
-	private static final String PASSWORD = "password";
 	private CustomerRepository customerRepo;
 	
 	@Autowired
@@ -31,45 +27,28 @@ public class BasicCustomerServiceImpl implements BasicCustomerService {
 
 	@Override
 	public ServiceResponse createCustomer(ServiceRequest req) {
+		
+		logger.info("createCustomer: " + req.getRequestId());
 
 		Customer customer = new Customer(req.getEmailAddress(), req.getPassword());
 		customerRepo.saveAndFlush(customer);
 
 		ServiceResponse resp = new ServiceResponse(req);
-		resp.setStatus("SUCCESS");
 
 		return resp;
 	}
 
 	@Override
 	public ServiceResponse deleteCustomer(ServiceRequest req) {
+		logger.info("deleteCustomer: " + req.getRequestId());
 		return new ServiceResponse(req);
 		
 	}
 
 	@Override
 	public ServiceResponse getCustomer(ServiceRequest req) {
+		logger.info("getCustomer: " + req.getRequestId());
 		return new ServiceResponse(req);
 	}
 
-
-
-	private boolean checkParam(Map<String, String> xmlMap, String param) {
-		boolean isValid = false;
-
-		if (xmlMap.get(param) != null)
-			isValid = true;
-
-		return isValid;
-	}
-
-	private boolean checkMessageParams(Map<String, String> xmlMap) {
-		boolean isValid = true;
-
-		if (xmlMap.get(EMAILADDRESS) == null || xmlMap.get(PASSWORD) == null) {
-			isValid = false;
-		}
-
-		return isValid;
-	}
 }

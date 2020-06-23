@@ -1,7 +1,7 @@
-
-<XmlServiceRequest>
-	<requestId>ABC001</requestId>
-	<requestMethod>CREATE</requestMethod>
-	<emailAddress>abc@def.com</emailAddress>
-	<password>1234</password>
-</XmlServiceRequest>
+<ServiceRequest>
+  <requestId>0123456789</requestId>
+  <requestService>basicCustomerService</requestService>
+  <requestMethod>createCustomer</requestMethod>
+  <emailAddress>abdcefg@kapschcs.at</emailAddress>
+  <password>kcs123</password>
+</ServiceRequest>

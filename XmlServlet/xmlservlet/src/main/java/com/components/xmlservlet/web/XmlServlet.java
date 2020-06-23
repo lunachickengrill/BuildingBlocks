@@ -12,22 +12,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.MediaType;
-import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.util.Assert;
 import org.springframework.util.MimeType;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.util.StreamUtils;
+import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.util.WebUtils;
 
-import com.components.xmlservlet.api.ServiceResponse;
-import com.components.xmlservlet.service.BasicCustomerService;
 import com.components.xmlservlet.service.DispatcherService;
-
 import com.components.xmlservlet.service.XmlConverter;
-
-import org.springframework.web.servlet.FrameworkServlet;
 
 @WebServlet(urlPatterns = "/service")
 public class XmlServlet extends FrameworkServlet {
@@ -40,6 +34,9 @@ public class XmlServlet extends FrameworkServlet {
 	Logger logger = LoggerFactory.getLogger(XmlServlet.class);
 
 	private DispatcherService dispatcherService;
+	
+	@Autowired
+	private XmlConverter converter;
 
 	@Autowired
 	public XmlServlet(final DispatcherService dispatcherService) {
@@ -57,6 +54,8 @@ public class XmlServlet extends FrameworkServlet {
 
 		String xmlRequest = retrieveTmngxXmlRequest(request);
 		logger.debug("processing XML message from {}: {}", request.getRemoteHost(), xmlRequest);
+		
+		System.out.println(xmlRequest);
 
 		String xmlResponse = dispatcherService.dispatch(xmlRequest);
 

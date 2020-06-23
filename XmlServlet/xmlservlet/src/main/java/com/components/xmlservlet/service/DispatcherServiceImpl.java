@@ -6,9 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -25,19 +23,19 @@ import com.components.xmlservlet.exception.XmlServiceException;
 @Service
 public class DispatcherServiceImpl implements DispatcherService {
 
+	@Autowired
 	private XmlConverter converter;
 
 	@Autowired
 	private ApplicationContext ctx;
 
-	@Autowired
-	public DispatcherServiceImpl(final XmlConverter converter) {
-		this.converter = converter;
+	public DispatcherServiceImpl() {
 	}
 
 	@Override
 	public String dispatch(String xml) {
-		ServiceResponse resp = new ServiceResponse(converter.toRequest(xml));
+		ServiceRequest req = converter.toServiceRequest(xml);
+		ServiceResponse resp = new ServiceResponse(req);
 
 		try {
 			Map<String, String> elementMap = converter.fromXmlRequest(xml);
@@ -46,7 +44,7 @@ public class DispatcherServiceImpl implements DispatcherService {
 			String requestMethod = elementMap.get("requestMethod");
 
 			if (requestService == null || requestMethod == null) {
-				throw new RuntimeException("invalid service/method");
+				throw new RuntimeException("message does not contain service or method name");
 			}
 
 			ApplicationService service = lookupService(requestService);

@@ -15,10 +15,12 @@ public class ServiceRequest extends ServiceMessage {
 
 	@NotNull
 	@Size(min = 2, max = 100)
+	@XStreamAlias("emailAddress")
 	private String emailAddress;
 
 	@NotNull
 	@Size(min = 2, max = 16)
+	@XStreamAlias("password")
 	private String password;
 
 	public ServiceRequest(final String requestId, final String requestService, final String requestMethod,
