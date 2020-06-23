@@ -18,6 +18,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	public <S extends Customer> S saveAndFlush(S entity);
 
 	public Optional<Customer> findById(Long id);
+	
+	public Optional<Customer> findByCustomerId(String customerId);
 
 	public Optional<Customer> findByEmailAddress(String emailAddress);
 

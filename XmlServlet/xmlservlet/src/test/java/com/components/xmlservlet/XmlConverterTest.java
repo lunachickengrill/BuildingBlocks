@@ -17,10 +17,9 @@ public class XmlConverterTest extends AbstractBaseTest {
 
 	@Autowired
 	private XmlConverter converter;
-	
+
 	@Autowired
 	ApplicationContext context;
-	
 
 	@Test
 	public void testToMapfromXml() {
@@ -35,21 +34,28 @@ public class XmlConverterTest extends AbstractBaseTest {
 		String xml = converter.toXmlResponse(response);
 		assertTrue(!(xml.isEmpty()));
 		assertTrue(xml.contains(REQUEST_ID));
+		
+		System.out.println(xml + "\n");
 	}
 
 	@Test
-	public void testToRequestXml() {
-		String request = converter.toXmlRequest(new ServiceRequest("123", "basicCustomerService", "createCustomer", "emailAdress", "password"));
-		assertNotNull(request);		
-		assertTrue(request.contains(REQUEST_SERVICE));
+	public void testRequestTotXml() {
+		String xml = converter.toXmlRequest(new ServiceRequest("123", "basicCustomerService", "createCustomer",
+				"123456", "First", "Last", "first.last@kapschcs.at", "kcs123"));
+
+		assertNotNull(xml);
+		assertTrue(xml.contains(REQUEST_SERVICE));
+		
+		System.out.println(xml + "\n");
 	}
-	
+
 	@Test
-	public void testXmlToRequest() {		
+	public void testXmlToRequest() {
 		ServiceRequest req = converter.toServiceRequest(XML_REQUEST);
 		assertNotNull(req);
 		assertTrue(req.getRequestService().equals(REQUEST_SERVICE));
+		
+		System.out.println(req.toString() + "\n");
 	}
-	
 
 }

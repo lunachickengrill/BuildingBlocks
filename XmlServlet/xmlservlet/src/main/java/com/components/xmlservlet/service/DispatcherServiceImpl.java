@@ -61,6 +61,8 @@ public class DispatcherServiceImpl implements DispatcherService {
 			resp = invoke(service, method, serviceMessage);
 			return converter.toXmlResponse(resp);
 		} catch (XmlServiceException ex) {
+			System.out.println("Exception thrown!");
+			System.out.println("Exception message: " + ex.getMessage());
 			resp.setStatus(ex.getMessage());
 			return converter.toXmlResponse(resp);
 		}
@@ -75,7 +77,7 @@ public class DispatcherServiceImpl implements DispatcherService {
 
 	}
 
-	private ServiceMessage createServiceRequest(Method method) {
+	private ServiceMessage createServiceRequest(Method method) throws XmlServiceException {
 		Class<?> paramType = method.getParameterTypes()[0];
 		Assert.isTrue(ServiceMessage.class.isAssignableFrom(paramType), "Expected subclass of ServiceMessage");
 
@@ -88,7 +90,7 @@ public class DispatcherServiceImpl implements DispatcherService {
 
 	}
 
-	private ApplicationService lookupService(final String serviceName) {
+	private ApplicationService lookupService(final String serviceName) throws XmlServiceException {
 
 		Boolean serviceExists = ctx.containsBean(serviceName);
 		if (!serviceExists) {
@@ -99,7 +101,7 @@ public class DispatcherServiceImpl implements DispatcherService {
 
 	}
 
-	private Method lookupMethod(ApplicationService service, String methodName) {
+	private Method lookupMethod(ApplicationService service, String methodName) throws XmlServiceException {
 
 		List<Method> methods = Arrays.asList(service.getClass().getDeclaredMethods());
 		Optional<Method> method = methods.stream().filter(m -> m.getName().equals(methodName)).findFirst();
@@ -110,7 +112,7 @@ public class DispatcherServiceImpl implements DispatcherService {
 		}
 	}
 
-	private ServiceResponse invoke(ApplicationService service, Method method, ServiceMessage serviceMessage) {
+	private ServiceResponse invoke(ApplicationService service, Method method, ServiceMessage serviceMessage) throws XmlServiceException {
 
 		MethodInvoker invoker = new MethodInvoker();
 		invoker.setTargetClass(service.getClass());
@@ -129,7 +131,7 @@ public class DispatcherServiceImpl implements DispatcherService {
 
 		try {
 			return (ServiceResponse) invoker.invoke();
-		} catch (InvocationTargetException | IllegalAccessException ex) {
+		} catch (InvocationTargetException | IllegalAccessException | XmlServiceException ex) {
 			resp.setStatus("ERROR");
 			throw new XmlServiceException(ex.getMessage());
 		}
