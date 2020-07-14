@@ -24,6 +24,7 @@ public class SpringConfig {
 	
 	private static final String REQUEST_ALIAS = "ServiceRequest";
 	
+//	Instead of defining the beans for the servlet, the servlet itself is annotated with @WebServlet	
 //    @Bean
 //    public XmlServlet tmngxXmlMessageServlet() {
 //        return new XmlServlet(dispatcherService);
