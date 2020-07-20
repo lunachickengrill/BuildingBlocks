@@ -19,7 +19,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 @Configuration
 @Import({ PersistanceConfig.class })
-@ServletComponentScan(basePackages = { "com.components.xmlservlet.web" })
+//@ServletComponentScan(basePackages = { "com.components.xmlservlet.web" })
 public class SpringConfig {
 	
 	private static final String REQUEST_ALIAS = "ServiceRequest";
@@ -27,19 +27,24 @@ public class SpringConfig {
 	@Autowired
 	DispatcherService dispatcherService;
 	
-//	Instead of defining the beans for the servlet, the servlet itself is annotated with @WebServlet	
+//	Instead of defining the beans for the servlet, the servlet itself can be annotated with @WebServlet in combination with @ServletComponentScan on config class	
 //    @Bean
 //    public XmlServlet tmngxXmlMessageServlet() {
 //        return new XmlServlet(dispatcherService);
 //    }
 	
-//	@Bean
-//	public ServletRegistrationBean<XmlServlet> xmlServletRegistrationBean(){
-//		ServletRegistrationBean<XmlServlet> registration = new ServletRegistrationBean<XmlServlet>();
-//		registration.addUrlMappings("/service");
-//		registration.setLoadOnStartup(12);
-//		return registration;
-//	}
+	@Bean
+	public XmlServlet xmlServlet() {
+		return new XmlServlet();
+	}
+	
+	@Bean
+	public ServletRegistrationBean<XmlServlet> xmlServletRegistrationBean(){
+		ServletRegistrationBean<XmlServlet> registration = new ServletRegistrationBean<>(xmlServlet(), "/service");
+		registration.setLoadOnStartup(12);
+		return registration;
+	}
+
 	
 //	@Bean("xStreamDom")
 //	public XStream getXstreamForDOM() {

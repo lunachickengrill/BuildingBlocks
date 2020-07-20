@@ -24,8 +24,7 @@ import org.springframework.web.util.WebUtils;
 import com.components.xmlservlet.service.DispatcherService;
 import com.components.xmlservlet.service.XmlConverter;
 
-@WebServlet(urlPatterns = "/service")
-//@Component
+//@WebServlet(urlPatterns = "/service")
 public class XmlServlet extends FrameworkServlet {
 
 	/**
@@ -35,14 +34,20 @@ public class XmlServlet extends FrameworkServlet {
 
 	Logger logger = LoggerFactory.getLogger(XmlServlet.class);
 
+	@Autowired
 	private DispatcherService dispatcherService;
 	
-	@Autowired
-	private XmlConverter converter;
+//	@Autowired
+//	private XmlConverter converter;
 
-	@Autowired
-	public XmlServlet(final DispatcherService dispatcherService) {
-		this.dispatcherService = dispatcherService;
+
+//	@Autowired
+//	public XmlServlet(final DispatcherService dispatcherService) {
+//		this.dispatcherService = dispatcherService;
+//	}
+	
+	public XmlServlet() {
+		
 	}
 
 	@Override
