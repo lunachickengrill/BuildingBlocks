@@ -24,6 +24,9 @@ public class SpringConfig {
 	
 	private static final String REQUEST_ALIAS = "ServiceRequest";
 	
+	@Autowired
+	DispatcherService dispatcherService;
+	
 //	Instead of defining the beans for the servlet, the servlet itself is annotated with @WebServlet	
 //    @Bean
 //    public XmlServlet tmngxXmlMessageServlet() {
@@ -32,9 +35,10 @@ public class SpringConfig {
 	
 //	@Bean
 //	public ServletRegistrationBean<XmlServlet> xmlServletRegistrationBean(){
-//		ServletRegistrationBean<XmlServlet> s = new ServletRegistrationBean<XmlServlet>();
-//		s.setLoadOnStartup(12);
-//		return s;
+//		ServletRegistrationBean<XmlServlet> registration = new ServletRegistrationBean<XmlServlet>();
+//		registration.addUrlMappings("/service");
+//		registration.setLoadOnStartup(12);
+//		return registration;
 //	}
 	
 //	@Bean("xStreamDom")

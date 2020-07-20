@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.MimeType;
 import org.springframework.util.MimeTypeUtils;
@@ -24,6 +25,7 @@ import com.components.xmlservlet.service.DispatcherService;
 import com.components.xmlservlet.service.XmlConverter;
 
 @WebServlet(urlPatterns = "/service")
+//@Component
 public class XmlServlet extends FrameworkServlet {
 
 	/**
