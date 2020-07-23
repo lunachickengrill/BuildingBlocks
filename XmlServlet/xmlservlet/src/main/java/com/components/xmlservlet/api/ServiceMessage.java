@@ -6,6 +6,12 @@ import javax.validation.constraints.NotNull;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ * Baseclass for a particular message. Contains shared properties.
+ * @author tschwaiger
+ *
+ */
+
 public abstract class ServiceMessage implements Serializable {
 
 	/**

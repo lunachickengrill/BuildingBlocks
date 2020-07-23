@@ -52,14 +52,25 @@ public class DispatcherServiceImpl implements DispatcherService {
 			if (requestService == null || requestMethod == null) {
 				throw new XmlServiceException("message does not contain service or method name");
 			}
-
+			
+			// Lookup the applicationService
 			ApplicationService service = lookupService(requestService);
+			
+			// Lookup the service method
 			Method method = lookupMethod(service, requestMethod);
+			
+			// Create a service request with method
 			ServiceMessage serviceMessage = createServiceRequest(method);
+			
+			// Binding the request params to the serviceMessage bean
 			serviceMessage = bindParameter(serviceMessage, elementMap);
+			
+			// Validate the created bean
 			validateBean(serviceMessage);
 
+			// invoke the actual service method		
 			resp = invoke(service, method, serviceMessage);
+			
 			return converter.toXmlResponse(resp);
 		} catch (XmlServiceException  ex) {
 			System.out.println("Exception message: " + ex.getMessage());
@@ -88,7 +99,6 @@ public class DispatcherServiceImpl implements DispatcherService {
 				| IllegalAccessException ex) {
 			throw new XmlServiceException("Cannot create ServiceMessage");
 		}
-
 	}
 
 	private ApplicationService lookupService(final String serviceName) throws XmlServiceException {
@@ -99,7 +109,6 @@ public class DispatcherServiceImpl implements DispatcherService {
 		}
 
 		return ctx.getBean(serviceName, ApplicationService.class);
-
 	}
 
 	private Method lookupMethod(ApplicationService service, String methodName) throws XmlServiceException {
