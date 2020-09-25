@@ -2,12 +2,14 @@ package com.components.xmlservlet;
 
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.components.xmlservlet.api.ServiceRequest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("test")
 public class AbstractBaseTest {
 
 	public static final String SERVICE = "requestService";
