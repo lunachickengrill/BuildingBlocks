@@ -77,7 +77,7 @@ public class XmlservletApplicationTests extends AbstractBaseTest {
 
 	}
 
-	@Ignore
+	
 	@Test
 	public void reflectMethodsOfService() {
 		for (Method m : customerService.getClass().getDeclaredMethods()) {

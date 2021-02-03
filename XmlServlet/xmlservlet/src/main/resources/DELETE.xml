@@ -1,5 +1,7 @@
-<XmlServiceRequest>
-	<requestId>ABC002</requestId>
-	<requestMethod>DELETE</requestMethod>
-	<emailAddress>abc@def.com</emailAddress>
-</XmlServiceRequest>
+<?xml version="1.0"?>
+<ServiceRequest>
+  <requestId>ABC001</requestId>
+  <requestService>basicCustomerService</requestService>
+  <requestMethod>deleteCustomer</requestMethod>
+  <customerId>999999</customerId>
+</ServiceRequest>

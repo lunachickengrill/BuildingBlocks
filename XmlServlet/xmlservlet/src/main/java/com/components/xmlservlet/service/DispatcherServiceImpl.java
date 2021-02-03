@@ -7,12 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.MethodInvoker;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.DataBinder;
 import org.springframework.validation.Validator;
@@ -25,6 +28,8 @@ import com.components.xmlservlet.exception.XmlServiceException;
 
 @Service
 public class DispatcherServiceImpl implements DispatcherService {
+	
+	Logger logger = LoggerFactory.getLogger(DispatcherServiceImpl.class);
 
 	@Autowired
 	private Validator validator;
@@ -44,6 +49,7 @@ public class DispatcherServiceImpl implements DispatcherService {
 		ServiceResponse resp = new ServiceResponse(req);
 
 		try {
+			logger.info("processing request");
 			Map<String, String> elementMap = converter.fromXmlRequest(xml);
 
 			String requestService = elementMap.get("requestService");
@@ -73,7 +79,7 @@ public class DispatcherServiceImpl implements DispatcherService {
 			
 			return converter.toXmlResponse(resp);
 		} catch (XmlServiceException  ex) {
-			System.out.println("Exception message: " + ex.getMessage());
+			logger.info("Exception message: " + ex.getMessage());
 			resp.setStatus("ERROR");
 			resp.setStatusMessage(ex.getMessage());
 			return converter.toXmlResponse(resp);
@@ -81,6 +87,9 @@ public class DispatcherServiceImpl implements DispatcherService {
 	}
 
 	private ServiceMessage bindParameter(ServiceMessage message, Map<String, String> parameter) {
+		
+		logger.info("binding parameters to ServiceMessage");
+		
 		DataBinder dataBinder = new DataBinder(message);
 		MutablePropertyValues mpv = new MutablePropertyValues();
 		mpv.addPropertyValues(parameter);
@@ -90,6 +99,8 @@ public class DispatcherServiceImpl implements DispatcherService {
 	}
 
 	private ServiceMessage createServiceRequest(Method method) throws XmlServiceException {
+		
+		logger.info("create ServiceMessage object with method {}", method.getName());
 		Class<?> paramType = method.getParameterTypes()[0];
 		Assert.isTrue(ServiceMessage.class.isAssignableFrom(paramType), "Expected subclass of ServiceMessage");
 
@@ -103,7 +114,9 @@ public class DispatcherServiceImpl implements DispatcherService {
 
 	private ApplicationService lookupService(final String serviceName) throws XmlServiceException {
 
+		logger.info("lookup service with name {} in spring context", serviceName);
 		Boolean serviceExists = ctx.containsBean(serviceName);
+		
 		if (!serviceExists) {
 			throw new XmlServiceException("Cannot lookup service with name " + serviceName);
 		}
@@ -115,6 +128,7 @@ public class DispatcherServiceImpl implements DispatcherService {
 
 		List<Method> methods = Arrays.asList(service.getClass().getDeclaredMethods());
 		Optional<Method> method = methods.stream().filter(m -> m.getName().equals(methodName)).findFirst();
+		logger.info("lookup method {} on service {}", methodName, service.getClass().getName());
 		if (method != null) {
 			return method.get();
 		} else {
@@ -124,6 +138,8 @@ public class DispatcherServiceImpl implements DispatcherService {
 
 	private ServiceResponse invoke(ApplicationService service, Method method, ServiceMessage serviceMessage)
 			throws XmlServiceException {
+		
+		logger.info("invoking service {} with method {} for message with requestId {}", service.getClass().getSimpleName(),method.getName(),serviceMessage.getRequestId());
 
 		MethodInvoker invoker = new MethodInvoker();
 		invoker.setTargetClass(service.getClass());
@@ -154,7 +170,7 @@ public class DispatcherServiceImpl implements DispatcherService {
 		validator.validate(obj, bindingResult);
 
 		if (bindingResult.hasErrors()) {
-			System.out.println("Inside validateBean");
+			logger.info("validation object {}", obj.toString());
 			throw new BeanValidationException("Bean validation error");
 		}
 

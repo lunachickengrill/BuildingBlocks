@@ -34,7 +34,6 @@ public class BasicCustomerServiceImpl implements BasicCustomerService {
 
 	@Override
 	public ServiceResponse createCustomer(ServiceRequest req) {
-//		validateBean(req);
 		
 		logger.info("createCustomer: " + req.getRequestId());
 
@@ -48,7 +47,7 @@ public class BasicCustomerServiceImpl implements BasicCustomerService {
 
 	@Override
 	public ServiceResponse deleteCustomer(ServiceRequest req) {
-//		validateBean(req);
+
 		logger.info("deleteCustomer: " + req.getRequestId());
 		return new ServiceResponse(req);
 		
@@ -56,7 +55,7 @@ public class BasicCustomerServiceImpl implements BasicCustomerService {
 
 	@Override
 	public ServiceResponse getCustomer(ServiceRequest req) {
-//		validateBean(req);
+
 		logger.info("getCustomer: " + req.getRequestId());
 		return new ServiceResponse(req);
 	}

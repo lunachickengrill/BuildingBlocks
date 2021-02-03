@@ -1,7 +1,11 @@
+<?xml version="1.0"?>
 <ServiceRequest>
-  <requestId>0123456789</requestId>
+  <requestId>ABC001</requestId>
   <requestService>basicCustomerService</requestService>
   <requestMethod>createCustomer</requestMethod>
-  <emailAddress>abdcefg@kapschcs.at</emailAddress>
-  <password>kcs123</password>
+  <customerId>999999</customerId>
+  <firstName>Tom</firstName>
+  <lastName>Turbo</lastName>
+  <emailAddress>tom@turob.at</emailAddress>
+  <password>123</password>
 </ServiceRequest>

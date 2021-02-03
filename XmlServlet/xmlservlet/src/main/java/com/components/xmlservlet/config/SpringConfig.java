@@ -37,7 +37,8 @@ public class SpringConfig {
 	public XmlServlet xmlServlet() {
 		return new XmlServlet();
 	}
-	
+
+	// Better to use the ServletRegistrationBean to register the servlet
 	@Bean
 	public ServletRegistrationBean<XmlServlet> xmlServletRegistrationBean(){
 		ServletRegistrationBean<XmlServlet> registration = new ServletRegistrationBean<>(xmlServlet(), "/service");

@@ -60,9 +60,8 @@ public class XmlServlet extends FrameworkServlet {
 		Assert.isTrue("POST".equals(request.getMethod()), "only POST requests are handled");
 
 		String xmlRequest = retrieveTmngxXmlRequest(request);
-		logger.debug("processing XML message from {}: {}", request.getRemoteHost(), xmlRequest);
+		logger.info("processing XML message from {}: {}", request.getRemoteHost(), xmlRequest);
 		
-		System.out.println(xmlRequest);
 
 		String xmlResponse = dispatcherService.dispatch(xmlRequest);
 
@@ -72,7 +71,7 @@ public class XmlServlet extends FrameworkServlet {
 		response.getWriter().write(xmlResponse);
 		response.getWriter().flush();
 
-		logger.debug("sending back XML reponse {}", xmlResponse);
+		logger.info("sending back XML reponse {}", xmlResponse);
 
 	}
 
