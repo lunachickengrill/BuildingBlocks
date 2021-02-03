@@ -19,12 +19,15 @@ hibernate:
   ejb:
     naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
   show_sql: false
- 
+
 logging:
-  level:
-    com.components.xmlservlet: INFO
-  pattern:
-    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+  config: classpath:log4j2.xml
+  
+#logging:
+#  level:
+#    com.components.xmlservlet: INFO
+#  pattern:
+#    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
     
 ---
 spring:
